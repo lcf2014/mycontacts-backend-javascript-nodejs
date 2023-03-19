@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    platform: linux/amd64
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    command:
+      - node
+      - "--inspect-brk=0.0.0.0"
+      - "."
+    expose:
+      - 3000
+      - 9229
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db2
+  db2:
+    image: postgres
+    build: .database/postgres
+    environment:
+      POSTGRES_DB: mycontacts
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      DB_EXTENSION: "uuid-ossp"
+    volumes:
+      - ./database/postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+  adminer2:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
