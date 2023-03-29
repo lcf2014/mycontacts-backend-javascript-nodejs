@@ -5,6 +5,11 @@ This project is a demo API to save contactss and categories and retrieve, delete
 
 ## Installation
 
+Run the command bellow to install the dependencies:
+```bash
+  npm install
+```
+
 After running command above, go to root folder and create required services with docker:
 
 ```bash
